@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>RGB para CMYK</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>RGB para CMYK</h2></div>
+    <div><input id="redInput" type="text" placeholder="Red"></div>
+    <div><input id="greenInput" type="text" placeholder="Green"></div>
+    <div><input id="blueInput" type="text" placeholder="Blue"></div>
+    <div><button onclick="convertRGBtoCMYK()">Converter</button></div>
+    <div><input id="cyanOutput" type="text" placeholder="Cyan"></div>
+    <div><input id="magentaOutput" type="text" placeholder="Magenta"></div>
+    <div><input id="yellowOutput" type="text" placeholder="Yellow"></div>
+    <div><input id="blackOutput" type="text" placeholder="Black"></div>
+</div>
+
+<script>
+function rgbToCMYK(rgb) {
+    let [r, g, b] = normalizeRGB(rgb);
+    let maximum = Math.max(r, g, b);
+    let k = 1 - maximum;
+    let c, m, y;
+
+    if (k === 1) {
+        c = m = y = 0;
+    } else {
+        c = (1 - r - k) / (1 - k);
+        m = (1 - g - k) / (1 - k);
+        y = (1 - b - k) / (1 - k);
+    }
+
+    return [Math.round(c * 100), Math.round(m * 100), Math.round(y * 100), Math.round(k * 100)];
+}
+
+function normalizeRGB(rgb) {
+    return rgb.map(value => value / 255.0);
+}
+
+function convertRGBtoCMYK() {
+    let red = parseFloat(document.getElementById("redInput").value);
+    let green = parseFloat(document.getElementById("greenInput").value);
+    let blue = parseFloat(document.getElementById("blueInput").value);
+    
+    let cmykValues = rgbToCMYK([red, green, blue]);
+    
+    document.getElementById("cyanOutput").value = cmykValues[0];
+    document.getElementById("magentaOutput").value = cmykValues[1];
+    document.getElementById("yellowOutput").value = cmykValues[2];
+    document.getElementById("blackOutput").value = cmykValues[3];
+}
+</script>
+</body>
+</html>

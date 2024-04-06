@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>CMYK para RGB</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>CMYK para RGB</h2></div>
+    <div><input id="cyanInput" type="text" placeholder="Cyan"></div>
+    <div><input id="magentaInput" type="text" placeholder="Magenta"></div>
+    <div><input id="yellowInput" type="text" placeholder="Yellow"></div>
+    <div><input id="blackInput" type="text" placeholder="Black"></div>
+    <div><button onclick="convertCMYKtoRGB()">Converter</button></div>
+    <div><input id="redOutput" type="text" placeholder="Red"></div>
+    <div><input id="greenOutput" type="text" placeholder="Green"></div>
+    <div><input id="blueOutput" type="text" placeholder="Blue"></div>
+</div>
+
+<script>
+function cmykToRGB(cmyk) {
+    let [c, m, y, k] = cmyk.map(value => value / 100);
+    let r = 255 * (1 - c) * (1 - k);
+    let g = 255 * (1 - m) * (1 - k);
+    let b = 255 * (1 - y) * (1 - k);
+
+    return [Math.round(r), Math.round(g), Math.round(b)];
+}
+
+function convertCMYKtoRGB() {
+    let cyan = parseFloat(document.getElementById("cyanInput").value);
+    let magenta = parseFloat(document.getElementById("magentaInput").value);
+    let yellow = parseFloat(document.getElementById("yellowInput").value);
+    let black = parseFloat(document.getElementById("blackInput").value);
+    
+    let rgbValues = cmykToRGB([cyan, magenta, yellow, black]);
+    
+    document.getElementById("redOutput").value = rgbValues[0];
+    document.getElementById("greenOutput").value = rgbValues[1];
+    document.getElementById("blueOutput").value = rgbValues[2];
+}
+</script>
+</body>
+</html>

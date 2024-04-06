@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>RGB para HSV</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>RGB para HSV</h2></div>
+    <div><input id="redInput" type="text" placeholder="Red"></div>
+    <div><input id="greenInput" type="text" placeholder="Green"></div>
+    <div><input id="blueInput" type="text" placeholder="Blue"></div>
+    <div><button onclick="convertRGBtoHSV()">Converter</button></div>
+    <div><input id="hueOutput" type="text" placeholder="Hue"></div>
+    <div><input id="saturationOutput" type="text" placeholder="Saturation"></div>
+    <div><input id="valueOutput" type="text" placeholder="Value"></div>
+</div>
+
+<script>
+function normalizeRGB(rgb) {
+    return rgb.map(value => value / 255.0);
+}
+
+function rgbToHSV(rgb) {
+    let [r, g, b] = normalizeRGB(rgb);
+    let maximum = Math.max(r, g, b);
+    let minimum = Math.min(r, g, b);
+    let delta = maximum - minimum;
+    let h, s, v;
+
+    if (delta === 0) {
+        h = 0;
+    } else if (maximum === r) {
+        h = 60 * (((g - b) / delta) % 6);
+    } else if (maximum === g) {
+        h = 60 * (((b - r) / delta) + 2);
+    } else {
+        h = 60 * (((r - g) / delta) + 4);
+    }
+
+    if (maximum === 0) {
+        s = 0;
+    } else {
+        s = delta / maximum;
+    }
+
+    v = maximum;
+
+    return [h, s, v];
+}
+
+function convertRGBtoHSV() {
+    let red = parseFloat(document.getElementById("redInput").value);
+    let green = parseFloat(document.getElementById("greenInput").value);
+    let blue = parseFloat(document.getElementById("blueInput").value);
+    
+    let hsvValues = rgbToHSV([red, green, blue]);
+    
+    document.getElementById("hueOutput").value = hsvValues[0];
+    document.getElementById("saturationOutput").value = hsvValues[1];
+    document.getElementById("valueOutput").value = hsvValues[2];
+}
+</script>
+</body>
+</html>

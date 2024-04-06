@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>HSV para RGB</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>HSV para RGB</h2></div>
+    <div><input id="hueInput" type="text" placeholder="Hue"></div>
+    <div><input id="saturationInput" type="text" placeholder="Saturation"></div>
+    <div><input id="valueInput" type="text" placeholder="Value"></div>
+    <div><button onclick="convertHSVtoRGB()">Converter</button></div>
+    <div><input id="redOutput" type="text" placeholder="Red"></div>
+    <div><input id="greenOutput" type="text" placeholder="Green"></div>
+    <div><input id="blueOutput" type="text" placeholder="Blue"></div>
+</div>
+
+<script>
+function hsvToRGB(h, s, v) {
+    h /= 60.0;
+    s = Math.max(0.0, Math.min(1.0, s));
+    v = Math.max(0.0, Math.min(1.0, v));
+
+    let c = v * s;
+    let x = c * (1 - Math.abs((h % 2) - 1));
+    let m = v - c;
+
+    let r, g, b;
+    
+    if (h < 1) {
+        r = c;
+        g = x;
+        b = 0;
+    } else if (h < 2) {
+        r = x;
+        g = c;
+        b = 0;
+    } else if (h < 3) {
+        r = 0;
+        g = c;
+        b = x;
+    } else if (h < 4) {
+        r = 0;
+        g = x;
+        b = c;
+    } else if (h < 5) {
+        r = x;
+        g = 0;
+        b = c;
+    } else {
+        r = c;
+        g = 0;
+        b = x;
+    }
+
+    return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+}
+
+function normalizeRGB(rgb) {
+    return rgb.map(value => value / 255.0);
+}
+
+function convertHSVtoRGB() {
+    let hue = parseFloat(document.getElementById("hueInput").value);
+    let saturation = parseFloat(document.getElementById("saturationInput").value);
+    let value = parseFloat(document.getElementById("valueInput").value);
+    
+    let rgbValues = hsvToRGB(hue, saturation, value);
+    
+    document.getElementById("redOutput").value = rgbValues[0];
+    document.getElementById("greenOutput").value = rgbValues[1];
+    document.getElementById("blueOutput").value = rgbValues[2];
+}
+
+</script>
+</body>
+</html>

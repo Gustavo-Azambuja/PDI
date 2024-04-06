@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Normalizar RGB</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>Normalizar RGB</h2></div>
+    <div><input id="redInput" type="text" placeholder="Red"></div>
+    <div><input id="greenInput" type="text" placeholder="Green"></div>
+    <div><input id="blueInput" type="text" placeholder="Blue"></div>
+    <div><button onclick="normalizeAndDisplay()">Normalizar</button></div>
+    <div><input id="normalizedRedOutput" type="text" placeholder="Normalized Red"></div>
+    <div><input id="normalizedGreenOutput" type="text" placeholder="Normalized Green"></div>
+    <div><input id="normalizedBlueOutput" type="text" placeholder="Normalized Blue"></div>
+</div>
+
+<script>
+function normalizeRGB(rgb) {
+    return rgb.map(value => value / 255.0);
+}
+
+function normalizeAndDisplay() {
+    let red = parseFloat(document.getElementById("redInput").value);
+    let green = parseFloat(document.getElementById("greenInput").value);
+    let blue = parseFloat(document.getElementById("blueInput").value);
+    
+    let normalizedValues = normalizeRGB([red, green, blue]);
+    
+    document.getElementById("normalizedRedOutput").value = normalizedValues[0];
+    document.getElementById("normalizedGreenOutput").value = normalizedValues[1];
+    document.getElementById("normalizedBlueOutput").value = normalizedValues[2];
+}
+</script>
+</body>
+</html>

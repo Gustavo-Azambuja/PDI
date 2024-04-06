@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>RGB para Escala de Cinza</title>
+</head>
+<header>
+	<nav>
+		<ul>
+		  <li><a href="html.html">RGB para HSV</a></li>
+		  <li><a href="hsv.html">HSV para RGB</a></li>
+		  <li><a href="rgb.html">Normalizar RGB</a></li>
+		  <li><a href="cmyk.html">RGB para CMYK</a></li>
+		  <li><a href="rgcmy.html">CMYK para RGB</a></li>
+		  <li><a href="grey.html">RGB para Escala de Cinza</a></li>
+		</ul>
+	  </nav>
+</header>
+<body>
+<div class="container">
+    <div><h2>RGB para Escala de Cinza</h2></div>
+    <div><input id="redInput" type="text" placeholder="Red"></div>
+    <div><input id="greenInput" type="text" placeholder="Green"></div>
+    <div><input id="blueInput" type="text" placeholder="Blue"></div>
+    <div><button onclick="convertRGBtoGray()">Converter</button></div>
+    <div><input id="grayOutput" type="text" placeholder="Gray"></div>
+</div>
+
+<script>
+function rgbToGray(rgb) {
+    let [r, g, b] = rgb;
+    return Math.round((r + g + b) / 3);
+}
+
+function convertRGBtoGray() {
+    let red = parseFloat(document.getElementById("redInput").value);
+    let green = parseFloat(document.getElementById("greenInput").value);
+    let blue = parseFloat(document.getElementById("blueInput").value);
+    
+    let grayValue = rgbToGray([red, green, blue]);
+    
+    document.getElementById("grayOutput").value = grayValue;
+}
+</script>
+</body>
+</html>
